@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimised AI Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+    <div class="max-w-7xl mx-auto bg-white rounded-lg shadow-md p-6">
+        <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Optimised Consensus</h1>
+        {% if not response %}
+            <form method="POST" class="mb-6">
+                <textarea name="query" rows="4" class="w-full p-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your question here"></textarea>
+                <button type="submit" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Send</button>
+            </form>
+        {% endif %}
+        {% if query %}
+        <div class="p-6 bg-gray-100 rounded-md">
+            <h2 class="text-xl font-semibold mb-2 text-gray-700">Your question:</h2>
+            <p class="mb-4 text-gray-600">{{ query }}</p>
+        </div>
+        {% endif %}
+        {% if response %}
+        <div class="p-6 bg-green-50 my-10 rounded-md">
+            <h2 class="text-xl font-semibold mb-2 text-gray-700">Optimised AI Response:</h2>
+            <div class="mb-6 text-gray-600">{{ response }}</div>
+        </div>
+
+            <h3 class="text-lg font-semibold mb-2 text-gray-700">Vote Tally:</h3>
+            <ul class="list-disc list-inside mb-4 text-gray-600">
+                <li>GPT-4o: {{ gpt4_votes }}</li>
+                <li>Claude 3.5 Sonnet: {{ claude_votes }}</li>
+                <li>Google Gemini 1.5 Pro: {{ google_votes }}</li>
+            </ul>
+            
+            <h3 class="text-lg font-semibold mb-4 text-gray-700">Individual Optimised LLM Responses:</h3>
+            {% set max_votes = [gpt4_votes, claude_votes, google_votes]|max %}
+            <div class="space-x-4 grid grid-cols-3">
+                <div class="p-4 rounded-md {% if gpt4_votes == max_votes %}bg-green-100 border-green-500{% else %}bg-gray-100 border-gray-300{% endif %} border">
+                    <h4 class="font-semibold text-gray-800">GPT-4o Optimised Response:</h4>
+                    <div class="mt-2 text-gray-600">{{ gpt4_response }}</div>
+                </div>
+                <div class="p-4 rounded-md {% if claude_votes == max_votes %}bg-green-100 border-green-500{% else %}bg-gray-100 border-gray-300{% endif %} border">
+                    <h4 class="font-semibold text-gray-800">Claude 3.5 Sonnet Optimised Response:</h4>
+                    <div class="mt-2 text-gray-600">{{ claude_response }}</div>
+                </div>
+                <div class="p-4 rounded-md {% if google_votes == max_votes %}bg-green-100 border-green-500{% else %}bg-gray-100 border-gray-300{% endif %} border">
+                    <h4 class="font-semibold text-gray-800">Google Gemini 1.5 Pro Optimised Response:</h4>
+                    <div class="mt-2 text-gray-600">{{ google_response }}</div>
+                </div>
+            </div>
+            <h3 class="text-lg font-semibold mt-8 mb-4 text-gray-700">Original LLM Responses:</h3>
+            <div class="space-x-4 grid grid-cols-3">
+                <div class="p-4 rounded-md bg-gray-100 border border-gray-300">
+                    <h4 class="font-semibold text-gray-800">GPT-4o Original Response:</h4>
+                    <div class="mt-2 text-gray-600">{{ gpt4_original_response }}</div>
+                </div>
+                <div class="p-4 rounded-md bg-gray-100 border border-gray-300">
+                    <h4 class="font-semibold text-gray-800">Claude 3.5 Sonnet Original Response:</h4>
+                    <div class="mt-2 text-gray-600">{{ claude_original_response }}</div>
+                </div>
+                <div class="p-4 rounded-md bg-gray-100 border border-gray-300">
+                    <h4 class="font-semibold text-gray-800">Google Gemini 1.5 Pro Original Response:</h4>
+                    <div class="mt-2 text-gray-600">{{ google_original_response }}</div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
